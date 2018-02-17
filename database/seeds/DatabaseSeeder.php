@@ -21,6 +21,17 @@ class DatabaseSeeder extends Seeder
 		$user->password = Hash::make( '1234' );
 		$user->is_admin = true;
         $user->save();
+
+        for ( $i = 1; $i <= 7; $i ++ ) {
+
+            $users           = new User();
+            $users->name     = 'user'.$i;
+            $users->email    = '$user'.$i.'@local.com';
+            $users->password = Hash::make( '1234' );
+            $users->is_admin = false;
+            $users->save();
+    
+        }
         
         $faker = Faker\Factory::create();
 
