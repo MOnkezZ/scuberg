@@ -26,14 +26,14 @@ class HomeController extends Controller
     {
         $data['all'] = User::all();
         $data['page'] = "users";
-        return view('user',$data);
+        return view('home',$data);
     }
 
     public function users()
     {
-        $data['all'] = User::all();
-        $data['page'] = "users";
-        return view('user',$data);
+            $data['all'] = User::all();
+            $data['page'] = "users";
+            return view('user',$data);
     }
 
 }

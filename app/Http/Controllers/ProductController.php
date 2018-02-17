@@ -6,17 +6,30 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data['all'] = Product::all();
-        $data['page'] = "product";
-        return view('product',$data);
+        if($request['cateid']){
+            $data['all'] = DB::table('products')->where('cateid', $request['cateid'])->offset(0)->limit(5)->get();
+        }else{
+            $data['all'] = DB::table('products')->offset(0)->limit(5)->get();
+        }
+        $data['cate'] = Category::all(); 
+        // $data['page'] = "product";
+        return view('main',$data);
     }
 
-    public function product()
+    public function productdetail(Request $request)
+    {
+        $data['prod'] = Product::find($request->id);
+        // $data['page'] = "product";
+        return view('productdetail',$data);
+    }
+
+    public function product(Request $request)
     {
         $data['all'] = Product::all();
         $data['page'] = "product";
@@ -46,9 +59,9 @@ class ProductController extends Controller
             // $obj->description = str_random(20);
             if(Input::hasFile('file')){
             // echo 'Uploaded';
-            $file = Input::file('file');
-            $file->move('uploads', $file->getClientOriginalName());
-            $obj->picture = "uploads/".$file->getClientOriginalName();
+                $file = Input::file('file');
+                $file->move('uploads', $file->getClientOriginalName());
+                $obj->picture = "uploads/".$file->getClientOriginalName();
             }else{
                 $obj->picture = "https://lorempixel.com/200/200/?62961";
             }
@@ -56,9 +69,9 @@ class ProductController extends Controller
             $obj = Product::find($request['prodid']);
             if(Input::hasFile('file')){
             // echo 'Uploaded';
-            $file = Input::file('file');
-            $file->move('uploads', $file->getClientOriginalName());
-            $obj->picture = "uploads/".$file->getClientOriginalName();
+                $file = Input::file('file');
+                $file->move('uploads', $file->getClientOriginalName());
+                $obj->picture = "uploads/".$file->getClientOriginalName();
             }
         }
         $obj->prodname = $request['prodname'];
