@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
+use Illuminate\Support\Facades\Input;
 
 class ProductController extends Controller
 {
@@ -42,12 +43,26 @@ class ProductController extends Controller
     {
         if($request['prodid']=="0"){
             $obj = new Product();
-            $obj->description = str_random(20);
-            $obj->picture = "https://lorempixel.com/200/200/?62961";
+            // $obj->description = str_random(20);
+            if(Input::hasFile('file')){
+            // echo 'Uploaded';
+            $file = Input::file('file');
+            $file->move('uploads', $file->getClientOriginalName());
+            $obj->picture = "uploads/".$file->getClientOriginalName();
+            }else{
+                $obj->picture = "https://lorempixel.com/200/200/?62961";
+            }
         }else{
             $obj = Product::find($request['prodid']);
+            if(Input::hasFile('file')){
+            // echo 'Uploaded';
+            $file = Input::file('file');
+            $file->move('uploads', $file->getClientOriginalName());
+            $obj->picture = "uploads/".$file->getClientOriginalName();
+            }
         }
         $obj->prodname = $request['prodname'];
+        $obj->description = $request['proddescription'];
         $obj->cateid = $request['cateid'];
         $obj->price = $request['price'];
         $obj->save();
@@ -100,5 +115,20 @@ class ProductController extends Controller
         $obj = Category::find($request->id);
         $obj->delete();
         return redirect('category');
+    }
+
+    public function upload(Request $request){
+
+        if(Input::hasFile('file')){
+
+            echo 'Uploaded';
+            $file = Input::file('file');
+            $file->move('uploads', $file->getClientOriginalName());
+            echo "File Name:".$file->getClientOriginalName()."<br>";
+            echo '<img src="uploads/'.$file->getClientOriginalName().'">';
+        }else{
+            echo "Failed";
+        }
+
     }
 }

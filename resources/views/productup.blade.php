@@ -8,7 +8,7 @@
    @else
    Add
  @endif</h2><br  />
- <form method="post" action="{{url('productsave')}}">
+ <form method="post" action="{{url('productsave')}}" enctype="multipart/form-data">
 
   @if ($chk=="update")
   <input type="hidden" name="prodid" value="{{$prod->id}}">
@@ -37,15 +37,13 @@
   </div>
   <div class="form-group">
     <label>Product Description</label>
-    <textarea class="form-control" name="proddescription" rows="3" placeholder="Enter Product Description">
-      @if ($chk=="update")
-      {{$prod->description}}
+    <textarea class="form-control" name="proddescription" rows="3" placeholder="Enter Product Description">@if($chk=="update"){{$prod->description}}
       @endif
     </textarea>
   </div>
   <div class="form-group">
     <label>Upload Image</label>
-    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+    <input type="file" class="form-control-file" id="file" name="file" aria-describedby="fileHelp">
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>

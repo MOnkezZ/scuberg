@@ -38,3 +38,5 @@ Route::get('/category/{id?}', 'ProductController@category')->name('category');
 Route::post('/catesave', 'ProductController@catesave')->name('catesave');
 
 Route::get('/catedel/{id}', 'ProductController@cateDel')->name('catedel');
+
+Route::post('upload', 'ProductController@upload')->name('upload');
