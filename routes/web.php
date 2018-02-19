@@ -26,7 +26,8 @@ Route::group(['middleware' => 'admin'], function () {
 
 });
 
-Route::get('/', 'ProductController@index')->name('home');
+Route::get('/', 'ProductController@index');
+Route::get('/home', 'ProductController@index');
 Route::post('/home', 'ProductController@index')->name('home');
 
 Route::get('/users', 'HomeController@users')->name('users');
