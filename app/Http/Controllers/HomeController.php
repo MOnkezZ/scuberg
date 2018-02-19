@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -31,9 +32,13 @@ class HomeController extends Controller
 
     public function users()
     {
+        if(Auth::User()->is_admin==1){
             $data['all'] = User::all();
             $data['page'] = "users";
             return view('user',$data);
+        }else{
+            return view('home');
+        }
     }
 
 }

@@ -7,6 +7,7 @@ use App\Product;
 use App\Category;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class ProductController extends Controller
 {
@@ -31,9 +32,13 @@ class ProductController extends Controller
 
     public function product(Request $request)
     {
-        $data['all'] = Product::all();
-        $data['page'] = "product";
-        return view('product',$data);
+        if(Auth::User()->is_admin==1){
+            $data['all'] = Product::all();
+            $data['page'] = "product";
+            return view('product',$data);
+        }else{
+            return view('home');
+        }
     }
 
     public function productUp(Request $request)
@@ -92,16 +97,20 @@ class ProductController extends Controller
 
     public function category(Request $request)
     {
-        if($request->id!=""){
-            $data['chk'] = "update";
-            $data['all'] = Category::all();
-            $data['editcate'] = Category::find($request->id);
+        if(Auth::User()->is_admin==1){
+            if($request->id!=""){
+                $data['chk'] = "update";
+                $data['all'] = Category::all();
+                $data['editcate'] = Category::find($request->id);
+            }else{
+                $data['chk'] = "add";
+                $data['all'] = Category::all();
+            }
+            $data['page'] = "category";
+            return view('category',$data);
         }else{
-            $data['chk'] = "add";
-            $data['all'] = Category::all();
+            return view('home');
         }
-        $data['page'] = "category";
-        return view('category',$data);
     }
 
     public function catesave(Request $request)
