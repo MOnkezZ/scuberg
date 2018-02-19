@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
     <h2>Category</h2><br  />
     <form method="post" action="{{ url('catesave') }}">
       <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -51,7 +51,7 @@
       <tr>
         <th width="40">ID</th>
         <th>Name</th>
-        <th width="140">Mange</th>
+        <th width="160">Mange</th>
     </tr>
 </thead>
 <tbody>

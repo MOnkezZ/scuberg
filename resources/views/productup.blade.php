@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
   <h2>Product @if ($chk=="update")
    Update ID: {{$prod->id}}
    @else
