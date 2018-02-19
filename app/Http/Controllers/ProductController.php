@@ -14,9 +14,9 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         if($request['cateid']){
-            $data['all'] = DB::table('products')->where('cateid', $request['cateid'])->offset(0)->limit(5)->get();
+            $data['all'] = DB::table('products')->where('cateid', $request['cateid'])->join('categories', 'products.cateid', '=', 'categories.id')->offset(0)->limit(5)->get();
         }else{
-            $data['all'] = DB::table('products')->offset(0)->limit(5)->get();
+            $data['all'] = DB::table('products')->join('categories', 'products.cateid', '=', 'categories.id')->offset(0)->limit(5)->get();
         }
         $data['cate'] = Category::all(); 
         // $data['page'] = "product";

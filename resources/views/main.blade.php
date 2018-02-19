@@ -27,8 +27,8 @@
         <b>Price:</b> 
         {{$prod->price}}                            </div>
         <div>
-          <b>Product ID:</b> 
-          <u>{{$prod->id}}</u>
+          <b>Category:</b> 
+          {{$prod->catename}}
         </div>
         <div class="pull-right">
           <a href="{{url('productdetail').'/'.$prod->id}}" class="btn btn-info">View More</a>
